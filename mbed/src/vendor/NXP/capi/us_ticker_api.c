@@ -22,7 +22,7 @@
        * "us_ticker_init", "us_ticker_read"
        * "us_ticker_set_interrupt", "us_ticker_disable_interrupt", "us_ticker_clear_interrupt"
  */
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
 #define US_TICKER_TIMER      ((LPC_TIM_TypeDef *)LPC_TIM3_BASE)
 #define US_TICKER_TIMER_IRQn TIMER3_IRQn
 
@@ -36,7 +36,7 @@ static int us_ticker_running = 0;
 
 static inline void us_ticker_init(void) {
     us_ticker_running = 1;
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     LPC_SC->PCONP |= 1 << 23; // Clock TIMER_3
 
     US_TICKER_TIMER->CTCR = 0x0; // timer mode

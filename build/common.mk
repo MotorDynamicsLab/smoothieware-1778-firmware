@@ -207,7 +207,7 @@ AS_FLAGS += -g3 $(DEVICE_FLAGS)
 # Linker Options.
 LDFLAGS = $(DEVICE_FLAGS) -specs=$(BUILD_DIR)/startfile.spec
 LDFLAGS += -Wl,-Map=$(OUTDIR)/$(PROJECT).map,--cref,--gc-sections,--wrap=_isatty,--wrap=malloc,--wrap=realloc,--wrap=free$(MRI_WRAPS)
-LDFLAGS += -T$(LSCRIPT)  -L $(EXTERNAL_DIR)/gcc/LPC1768
+LDFLAGS += -T$(LSCRIPT)  -L $(EXTERNAL_DIR)/gcc/LPC1778
 ifneq "$(NO_FLOAT_SCANF)" "1"
 LDFLAGS += -u _scanf_float
 endif
@@ -283,7 +283,7 @@ size: $(OUTDIR)/$(PROJECT).elf
 
 clean:
 	@echo Cleaning up all build generated files
-	$(Q) $(REMOVE_DIR) $(OUTDIR) $(QUIET)
+	$(Q) $(REMOVE_DIR) $(call convert-slash,$(OUTDIR)) $(QUIET)
 
 -include $(DEPFILES)
 

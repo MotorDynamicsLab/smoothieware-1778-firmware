@@ -38,6 +38,14 @@ void pin_function(PinName pin, int function) {
     PINCONARRAY->PINSEL[index] &= ~(0x3 << offset);
     PINCONARRAY->PINSEL[index] |= function << offset;
 
+#elif defined(TARGET_LPC1778)
+	uint32_t pin_number = (uint32_t)pin;
+
+	__IO uint32_t *reg = (__IO uint32_t*)(LPC_IOCON_BASE + 4 * pin_number);
+
+	// pin function bits: [2:0] -> 111 = (0x7)
+	*reg = (*reg & ~0x7) | (function & 0x7);
+
 #elif defined(TARGET_LPC11U24)
     uint32_t pin_number = (uint32_t)pin;
 
@@ -74,6 +82,24 @@ void pin_mode(PinName pin, PinMode mode) {
         PINCONARRAY->PINMODE[index] &= ~(0x3 << offset);
         PINCONARRAY->PINMODE[index] |= (uint32_t)mode << offset;
     }
+
+#elif defined(TARGET_LPC1778)
+	uint32_t pin_number = (uint32_t)pin;
+	uint32_t drain = ((uint32_t)mode & (uint32_t)OpenDrain) >> 2;
+
+	// Open drain mode is not available on LPC2368
+	__IO uint32_t *reg = (__IO uint32_t*)(LPC_IOCON_BASE + 4 * pin_number);
+	uint32_t tmp = *reg;
+
+	// pin mode bits: [4:3] -> 11000 = (0x3 << 3)
+	tmp &= ~(0x3 << 3);
+	tmp |= (mode & 0x3) << 3;
+
+	// drain
+	tmp &= ~(0x1 << 10);
+	tmp |= drain << 10;
+
+	*reg = tmp;
 
 #elif defined(TARGET_LPC11U24)
     uint32_t pin_number = (uint32_t)pin;

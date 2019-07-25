@@ -56,7 +56,11 @@
 #include "libs/Watchdog.h"
 
 #include "version.h"
+#if defined(TARGET_LPC1768)
 #include "system_LPC17xx.h"
+#elif defined(TARGET_LPC1778)
+#include "system_LPC177x_8x.h"
+#endif
 #include "platform_memory.h"
 
 #include "mbed.h"
@@ -82,18 +86,17 @@ USBMSD *msc= NULL;
 
 SDFAT mounter __attribute__ ((section ("AHBSRAM0"))) ("sd", &sd);
 
-GPIO leds[5] = {
-    GPIO(P1_18),
-    GPIO(P1_19),
-    GPIO(P1_20),
-    GPIO(P1_21),
-    GPIO(P4_28)
+GPIO leds[4] = {
+    GPIO(LED1),
+    GPIO(LED2),
+    GPIO(LED3),
+    GPIO(LED4),
 };
 
 void init() {
 
     // Default pins to low status
-    for (int i = 0; i < 5; i++){
+    for (int i = 0; i < 4; i++){
         leds[i].output();
         leds[i]= 0;
     }
@@ -101,14 +104,7 @@ void init() {
     Kernel* kernel = new Kernel();
 
     kernel->streams->printf("Smoothie Running @%ldMHz\r\n", SystemCoreClock / 1000000);
-    Version version;
-    kernel->streams->printf("  Build version %s, Build date %s\r\n", version.get_build(), version.get_build_date());
-#ifdef CNC
-    kernel->streams->printf("  CNC Build\r\n");
-#endif
-#ifdef DISABLEMSD
-    kernel->streams->printf("  NOMSD Build\r\n");
-#endif
+    SimpleShell::version_command("", kernel->streams);
 
     bool sdok= (sd.disk_initialize() == 0);
     if(!sdok) kernel->streams->printf("SDCard failed to initialize\r\n");
@@ -139,10 +135,6 @@ void init() {
     kernel->add_module( new(AHB0) PlayLed() );
 
     // these modules can be completely disabled in the Makefile by adding to EXCLUDE_MODULES
-    #ifndef NO_TOOLS_ENDSTOPS
-    kernel->add_module( new(AHB0) Endstops() );
-    #endif
-
     #ifndef NO_TOOLS_SWITCH
     SwitchPool *sp= new SwitchPool();
     sp->load_tools();
@@ -159,6 +151,9 @@ void init() {
     TemperatureControlPool *tp= new TemperatureControlPool();
     tp->load_tools();
     delete tp;
+    #endif
+    #ifndef NO_TOOLS_ENDSTOPS
+    kernel->add_module( new(AHB0) Endstops() );
     #endif
     #ifndef NO_TOOLS_LASER
     kernel->add_module( new Laser() );

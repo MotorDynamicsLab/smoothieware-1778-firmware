@@ -33,8 +33,8 @@
 #                  default: Release
 #   DEVICES: List of devices for which to build.  This list be space delimited
 #            and can include the following devices:
-#            LPC1768, LPC11U24
-#            default: LPC1768
+#            LPC1768, LPC1778, LPC11U24
+#            default: LPC1778
 #   GPFLAGS: Additional compiler flags used when building C++ sources.
 #   GCFLAGS: Additional compiler flags used when building C sources.
 #   AS_GCFLAGS: Additional compiler flags used by GCC when building
@@ -77,13 +77,13 @@ $(error makefile must set BUILD_DIR.)
 endif
 
 
-# Default DEVICES to LPC1768 if nothing else has been specified.
-DEVICES?=lpc1768
+# Default DEVICES to LPC1778 if nothing else has been specified.
+DEVICES?=lpc1778
 
 
 # Use DEVICES variable to determine which builds to perform.
 CLEAN_DEVICES=$(addsuffix .clean,$(DEVICES))
-.PHONY: all clean $(DEVICES) $(CLEAN_DEVICES) deploy deploy-lpc1768 deploy-lpc11u24
+.PHONY: all clean $(DEVICES) $(CLEAN_DEVICES) deploy deploy-lpc1768 deploy-lpc1778 deploy-lpc11u24
 
 all: $(DEVICES)
 
@@ -102,6 +102,10 @@ ifdef LPC_DEPLOY
 deploy deploy-lpc1768:
 	@echo Deploying to target.
 	$(subst PROJECT,LPC1768/$(PROJECT),$(LPC_DEPLOY))
+
+deploy deploy-lpc1778:
+	@echo Deploying to target.
+	$(subst PROJECT,LPC1778/$(PROJECT),$(LPC_DEPLOY))
 
 deploy-lpc11u24:
 	@echo Deploying to target.

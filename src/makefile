@@ -1,6 +1,6 @@
 PROJECT=main
 BUILD_DIR=../build
-DEVICES=lpc1768
+DEVICES=lpc1778
 
 # BUILD_TYPE can be set to the following values:
 #  Checked - Optimizations enabled with MRI debug monitor support. (Recommended Type)
@@ -72,7 +72,7 @@ ifeq "$(EXCLUDE_MODULES)" ""
 
 ifeq "$(CNC)" "1"
 # CNC build excludes these
-export EXCLUDE_MODULES = tools/filamentdetector tools/scaracal tools/temperaturecontrol tools/extruder
+export EXCLUDE_MODULES = tools/filamentdetector tools/scaracal tools/temperaturecontrol tools/temperatureswitch tools/extruder
 else
 # 3D build excludes these
 export EXCLUDE_MODULES = tools/drillingcycles tools/spindle
@@ -95,6 +95,11 @@ ifneq "$(AXIS)" ""
 DEFINES += -DMAX_ROBOT_ACTUATORS=$(AXIS)
 endif
 
+# define the number of primary (cartesian) axis must be >= MAX_ROBOT_ACTUATORS
+ifneq "$(PAXIS)" ""
+DEFINES += -DN_PRIMARY_AXIS=$(PAXIS)
+endif
+
 # set to not compile in any network support
 #export NONETWORK = 1
 
@@ -103,23 +108,28 @@ include $(BUILD_DIR)/build.mk
 CONSOLE?=/dev/arduino
 BAUD?=9600
 
-.PHONY: debug-store flash upload debug console dfu
+ifneq "$(OS)" "Windows_NT"
+COPY=cp
+else
+COPY=copy
+endif
 
+.PHONY: debug-store flash upload debug console dfu
 print-%  : ; @echo $* = $($*)
 
-debug-store: ../LPC1768/$(PROJECT).elf
-	cp ../LPC1768/$(PROJECT).elf ../LPC1768/$(PROJECT)_lastupload.elf
+debug-store: ../LPC1778/$(PROJECT).elf
+	cd .. && cd LPC1778 && $(COPY) $(PROJECT).elf $(PROJECT)_lastupload.elf
 
-flash: ../LPC1768/$(PROJECT).hex debug-store
+flash: ../LPC1778/$(PROJECT).hex debug-store
 	lpc21isp $< $(CONSOLE) 115200 12000
 
-dfu: ../LPC1768/$(PROJECT).bin
+dfu: ../LPC1778/$(PROJECT).bin
 	dfu-util -D $< -R
 
-upload: ../LPC1768/$(PROJECT).bin debug-store
+upload: ../LPC1778/$(PROJECT).bin debug-store
 	dfu-util -R -d 1d50:6015 -D $<
 
-debug: ../LPC1768/$(PROJECT)_lastupload.elf
+debug: ../LPC1778/$(PROJECT)_lastupload.elf
 	arm-none-eabi-gdb $< -ex  "set target-charset ASCII" -ex "set remotelogfile mri.log" -ex "target remote $(CONSOLE)"
 
 console:

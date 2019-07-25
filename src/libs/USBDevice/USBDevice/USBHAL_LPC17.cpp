@@ -16,7 +16,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#if defined(TARGET_LPC1768) || defined (__LPC17XX__)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined (__LPC17XX__)
 
 // void setled(int, bool);
 #define setled(a, b) do {} while (0)
@@ -24,12 +24,20 @@
 #include "USBHAL.h"
 
 #include <cstdio>
+#if defined(TARGET_LPC1768)
 #include <LPC17xx.h>
+#elif defined(TARGET_LPC1778)
+#include <LPC177x_8x.h>
+#endif
 
 #ifdef MBED
     #include <score_cm3.h>
 #else
+#if defined(TARGET_LPC1768)
     #include <lpc17xx_nvic.h>
+#elif defined(TARGET_LPC1778)
+	#include <lpc177x_8x_nvic.h>
+#endif
 #endif
 
 #include "wait_api.h"
@@ -457,6 +465,7 @@ void USBHAL::init() {
     // Disable IRQ
     NVIC_DisableIRQ(USB_IRQn);
 
+#if defined(TARGET_LPC1768)
     // Enable power to USB device controller
     LPC_SC->PCONP |= PCUSB;
 
@@ -471,6 +480,24 @@ void USBHAL::init() {
     // Configure pin P2.9 to be Connect
     LPC_PINCON->PINSEL4 &= 0xfffcffff;
     LPC_PINCON->PINSEL4 |= 0x00040000;
+#elif defined(TARGET_LPC1778)
+	// P0.29 D1+, P0.30 D1-
+	LPC_IOCON->P0_29 &= ~0x07;
+	LPC_IOCON->P0_29 |= 0x1;
+	LPC_IOCON->P0_30 &= ~0x07;
+	LPC_IOCON->P0_30 |= 0x1;
+
+	// USB_SoftConnect
+	LPC_IOCON->P2_9 &= ~0x07;
+	LPC_IOCON->P2_9 |= 0x1;
+
+	// USB PCLK -> enable USB Per.
+	LPC_SC->PCONP |= (1UL << 31);
+
+	// Dev, AHB clock enable */
+	LPC_USB->USBClkCtrl = 0x12 | (1 << 2);
+	setled(4, 1); while ((LPC_USB->USBClkSt & 0x12) != 0x12); setled(4, 0);
+#endif
 
     // Disconnect USB device
     SIEdisconnect();

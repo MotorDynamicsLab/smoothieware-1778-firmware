@@ -6,8 +6,11 @@
 #include <cstring>
 #include <cstdio>
 
+#if defined(TARGET_LPC1768)
 #include "lpc17xx_clkpwr.h"
-
+#elif defined(TARGET_LPC1778)
+#include "lpc177x_8x_clkpwr.h"
+#endif
 #include <mri.h>
 
 // #include "netcore.h"
@@ -200,11 +203,33 @@ LPC17XX_Ethernet::LPC17XX_Ethernet()
 
 void LPC17XX_Ethernet::on_module_loaded()
 {
+#if !defined(TARGET_LPC1778)
     LPC_PINCON->PINSEL2 |=   (1 << 0) | (1 << 2) | (1 << 8) | (1 << 16) | (1 << 18) | (1 << 20) | (1 << 28) | (1 << 30);
     LPC_PINCON->PINSEL2 &= ~((1 << 1) | (1 << 3) | (1 << 9) | (1 << 17) | (1 << 19) | (1 << 21) | (1 << 29) | (1 << 31));
     LPC_PINCON->PINSEL3 |=   (1 << 0) | (1 << 2);
     LPC_PINCON->PINSEL3 &= ~((1 << 1) | (1 << 3));
-
+#else
+	LPC_IOCON->P1_0 &= ~0x07;
+	LPC_IOCON->P1_0 |= 1;
+	LPC_IOCON->P1_1 &= ~0x07;
+	LPC_IOCON->P1_1 |= 1;
+	LPC_IOCON->P1_4 &= ~0x07;
+	LPC_IOCON->P1_4 |= 1;
+	LPC_IOCON->P1_8 &= ~0x07;
+	LPC_IOCON->P1_8 |= 1;
+	LPC_IOCON->P1_9 &= ~0x07;
+	LPC_IOCON->P1_9 |= 1;
+	LPC_IOCON->P1_10 &= ~0x07;
+	LPC_IOCON->P1_10 |= 1;
+	LPC_IOCON->P1_14 &= ~0x07;
+	LPC_IOCON->P1_14 |= 1;
+	LPC_IOCON->P1_15 &= ~0x07;
+	LPC_IOCON->P1_15 |= 1;
+	LPC_IOCON->P1_16 &= ~0x07;
+	LPC_IOCON->P1_16 |= 1;
+	LPC_IOCON->P1_17 &= ~0x07;
+	LPC_IOCON->P1_17 |= 1;
+#endif
     DEBUG_PRINTF("EMAC_INIT\n");
     emac_init();
     DEBUG_PRINTF("INIT OK\n");

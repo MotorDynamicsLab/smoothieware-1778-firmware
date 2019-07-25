@@ -32,9 +32,10 @@ void analogout_init(dac_t *obj, PinName pin) {
         error("DAC pin mapping failed");
     }
 
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
     // power is on by default, set DAC clk divider is /4
     LPC_SC->PCLKSEL0 &= ~(0x3 << 22);
-
+#endif
     // map out (must be done before accessing registers)
     pinmap_pinout(pin, PinMap_DAC);
 
@@ -46,13 +47,23 @@ void analogout_free(dac_t *obj) {}
 static inline void dac_write(int value) {
     value &= 0x3FF; // 10-bit
 
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
     // Set the DAC output
     LPC_DAC->DACR = (0 << 16)       // bias = 0
                   | (value << 6);
+#elif defined(TARGET_LPC1778)
+	// Set the DAC output
+	LPC_DAC->CR = (0 << 16)       // bias = 0
+				| (value << 6);
+#endif
 }
 
 static inline int dac_read() {
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
     return (LPC_DAC->DACR >> 6) & 0x3FF;
+#elif defined(TARGET_LPC1778)
+	return (LPC_DAC->CR >> 6) & 0x3FF;
+#endif
 }
 
 void analogout_write(dac_t *obj, float value) {

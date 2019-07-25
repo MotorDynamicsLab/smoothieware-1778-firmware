@@ -21,7 +21,7 @@
 #include <stddef.h>
 #include "cmsis.h"
 
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
 #define CHANNEL_NUM     48
 
 #elif defined(TARGET_LPC11U24)
@@ -31,7 +31,7 @@
 static uint32_t channel_ids[CHANNEL_NUM] = {0};
 static gpio_irq_handler irq_handler;
 
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
 static void handle_interrupt_in(void) {
     // Read in all current interrupt registers. We do this once as the
     // GPIO interrupt registers are on the APB bus, and this is slow.
@@ -115,7 +115,7 @@ int gpio_irq_init(gpio_irq_t *obj, PinName pin, gpio_irq_handler handler, uint32
 
     irq_handler = handler;
 
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     obj->port = (int)pin & ~0x1F;
     obj->pin = (int)pin & 0x1F;
 
@@ -185,7 +185,7 @@ void gpio_irq_free(gpio_irq_t *obj) {
 }
 
 void gpio_irq_set(gpio_irq_t *obj, gpio_irq_event event, uint32_t enable) {
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     // ensure nothing is pending
     switch (obj->port) {
          case LPC_GPIO0_BASE: LPC_GPIOINT->IO0IntClr = 1 << obj->pin; break;

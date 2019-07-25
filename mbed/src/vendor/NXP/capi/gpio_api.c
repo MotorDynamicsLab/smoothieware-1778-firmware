@@ -19,7 +19,7 @@
 /* PORTING STEP 3a: Implement "gpio_init" */
 
 uint32_t gpio_set(PinName pin) {
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
 #ifdef TARGET_LPC2368
     LPC_SC->SCS |= 1; // High speed GPIO is enabled on ports 0 and 1
 #endif
@@ -41,7 +41,7 @@ void gpio_init(gpio_t *obj, PinName pin, PinDirection direction) {
     obj->pin = pin;
     obj->mask = gpio_set(pin);
 
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     LPC_GPIO_TypeDef *port_reg = (LPC_GPIO_TypeDef *) ((int)pin & ~0x1F);
 
     obj->reg_set = &port_reg->FIOSET;

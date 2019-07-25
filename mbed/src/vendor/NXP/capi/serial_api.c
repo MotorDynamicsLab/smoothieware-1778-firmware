@@ -29,7 +29,7 @@
 /******************************************************************************
  * INITIALIZATION
  ******************************************************************************/
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
 static const PinMap PinMap_UART_TX[] = {
     {P0_0,  UART_3, 2},
     {P0_2,  UART_0, 1},
@@ -89,7 +89,7 @@ void serial_init(serial_t *obj, PinName tx, PinName rx) {
         error("Serial pinout mapping failed");
     }
 
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     obj->uart = (LPC_UART_TypeDef *)uart;
     // enable power
     switch (uart) {
@@ -178,9 +178,9 @@ void serial_baud(serial_t *obj, int baudrate) {
         case UART_3: LPC_SC->PCLKSEL1 &= ~(0x3 << 18); LPC_SC->PCLKSEL1 |= (0x1 << 18); break;
         default: error("serial_baud"); break;
     }
-
     uint32_t PCLK = SystemCoreClock;
-
+#elif defined(TARGET_LPC1778)
+	uint32_t PCLK = PeripheralClock;
 #elif defined(TARGET_LPC11U24)
     LPC_SYSCON->UARTCLKDIV = 0x1;
     uint32_t PCLK = SystemCoreClock;
@@ -312,7 +312,7 @@ static inline void uart_irq(uint32_t iir, uint32_t index) {
         irq_handler(serial_irq_ids[index], irq_type);
 }
 
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
 void uart0_irq() {uart_irq(LPC_UART0->IIR, 0);}
 void uart1_irq() {uart_irq(LPC_UART1->IIR, 1);}
 void uart2_irq() {uart_irq(LPC_UART2->IIR, 2);}
@@ -331,7 +331,7 @@ void serial_irq_set(serial_t *obj, SerialIrq irq, uint32_t enable) {
     IRQn_Type irq_n = (IRQn_Type)0;
     uint32_t vector = 0;
     switch ((int)obj->uart) {
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
         case UART_0: irq_n=UART0_IRQn; vector = (uint32_t)&uart0_irq; break;
         case UART_1: irq_n=UART1_IRQn; vector = (uint32_t)&uart1_irq; break;
         case UART_2: irq_n=UART2_IRQn; vector = (uint32_t)&uart2_irq; break;

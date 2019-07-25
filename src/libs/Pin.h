@@ -5,7 +5,11 @@
 #include <stdio.h>
 #include <string>
 
+#if defined(TARGET_LPC1768)
 #include "libs/LPC17xx/sLPC17xx.h" // smoothed mbed.h lib
+#elif defined(TARGET_LPC1778)
+#include "libs/LPC177x_8x/sLPC177x_8x.h"
+#endif
 #include "PinNames.h"
 
 namespace mbed {

@@ -44,7 +44,7 @@ namespace mbed {
  * @endcode
  *
  * @note
- *  On the LPC1768 and LPC2368, the PWMs all share the same
+ *  On the LPC1768, LPC1778 and LPC2368, the PWMs all share the same
  *  period - if you change the period for one, you change it for all.
  *  Although routines that change the period maintain the duty cycle
  *  for its PWM, all other PWMs will require their duty cycle to be
