@@ -12,6 +12,7 @@ debug
 /mbed/src/Debug/
 /mbed/src/Release/
 /LPC1768/
+/LPC1778/
 /mbed/drop/
 /gcc-arm-none-eabi/
 /BuildShell

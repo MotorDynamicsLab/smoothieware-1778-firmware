@@ -60,7 +60,7 @@ Rake.application.add_loader('d', DfileLoader.new)
 
 PROG = 'smoothie'
 
-DEVICE = 'LPC1768'
+DEVICE = 'LPC1778'
 ARCHITECTURE = 'armv7-m'
 
 MBED_DIR = './mbed/drop'
@@ -152,7 +152,7 @@ SRC.each do |s|
 end
 
 INCLUDE_DIRS = [Dir.glob(['./src/**/', './mri/**/'])].flatten
-MBED_INCLUDE_DIRS = %W(#{MBED_DIR}/ #{MBED_DIR}/LPC1768/)
+MBED_INCLUDE_DIRS = %W(#{MBED_DIR}/ #{MBED_DIR}/LPC1778/)
 
 INCLUDE = (INCLUDE_DIRS+MBED_INCLUDE_DIRS).collect { |d| "-I#{d}" }.join(" ")
 
@@ -188,14 +188,14 @@ end
 
 MRI_ENABLE = 1  unless defined? MRI_ENABLE # set to 0 to disable MRI
 MRI_LIB = MRI_ENABLE == 1 ? './mri/mri.ar' : ''
-MBED_LIB = "#{MBED_DIR}/LPC1768/GCC_ARM/libmbed.a"
+MBED_LIB = "#{MBED_DIR}/LPC1778/GCC_ARM/libmbed.a"
 
 SYS_LIBS = '-lstdc++_s -lsupc++_s -lm -lgcc -lc_s -lgcc -lc_s -lnosys'
 LIBS = [MBED_LIB, SYS_LIBS, MRI_LIB].join(' ')
 
 MRI_DEFINES = %W(-DMRI_ENABLE=#{MRI_ENABLE} -DMRI_INIT_PARAMETERS='"#{MRI_UART}"' -DMRI_BREAK_ON_INIT=#{MRI_BREAK_ON_INIT} -DMRI_SEMIHOST_STDIO=#{MRI_SEMIHOST_STDIO})
 
-defines = %w(-DCHECKSUM_USE_CPP -D__LPC17XX__  -DTARGET_LPC1768 -DWRITE_BUFFER_DISABLE=0 -DSTACK_SIZE=3072 -DCHECKSUM_USE_CPP)
+defines = %w(-DCHECKSUM_USE_CPP -D__LPC177X_8X__  -DTARGET_LPC1778 -DWRITE_BUFFER_DISABLE=0 -DSTACK_SIZE=3072 -DCHECKSUM_USE_CPP)
 defines += exclude_defines.collect{|d| "-DNO_#{d}"}
 defines += MRI_DEFINES
 defines << "-DDEFAULT_SERIAL_BAUD_RATE=#{DEFAULT_SERIAL_BAUD_RATE}"
@@ -214,7 +214,7 @@ CXXFLAGS = CFLAGS + ' -fno-rtti -std=gnu++11 -fexceptions' # used for a .cxx fil
 MRI_WRAPS = MRI_ENABLE == 1 ? ',--wrap=_read,--wrap=_write,--wrap=semihost_connected' : ''
 
 # Linker script to be used.  Indicates what code should be placed where in memory.
-LSCRIPT = "#{MBED_DIR}/LPC1768/GCC_ARM/LPC1768.ld"
+LSCRIPT = "#{MBED_DIR}/LPC1778/GCC_ARM/LPC1778.ld"
 LDFLAGS = "-mcpu=cortex-m3 -mthumb -specs=./build/startfile.spec" +
     " -Wl,-Map=#{OBJDIR}/smoothie.map,--cref,--gc-sections,--wrap=_isatty,--wrap=malloc,--wrap=realloc,--wrap=free" +
     MRI_WRAPS +
@@ -299,8 +299,8 @@ file "#{PROG}.elf" => OBJ do |t|
   sh "#{LD} #{LDFLAGS} #{OBJ} #{LIBS}  -o #{OBJDIR}/#{t.name}"
 end
 
-#arm-none-eabi-objcopy -R .stack -O ihex ../LPC1768/main.elf ../LPC1768/main.hex
-#arm-none-eabi-objdump -d -f -M reg-names-std --demangle ../LPC1768/main.elf >../LPC1768/main.disasm
+#arm-none-eabi-objcopy -R .stack -O ihex ../LPC1778/main.elf ../LPC1778/main.hex
+#arm-none-eabi-objdump -d -f -M reg-names-std --demangle ../LPC1778/main.elf >../LPC1778/main.disasm
 
 rule '.o' => lambda{ |objfile| obj2src(objfile, 'cpp') } do |t|
   puts "Compiling #{t.source}"
