@@ -29,7 +29,7 @@ void sleep(void) {
     // PCON[PD] set to sleep
 #if defined(TARGET_LPC11U24)
     LPC_PMU->PCON = 0x0;
-#elif defined(TARGET_LPC1768)
+#elif defined(TARGET_LPC1768) || defined(TARGET_LPC1778)
     LPC_SC->PCON = 0x0;
 #endif
 
@@ -41,7 +41,7 @@ void sleep(void) {
 }
 
 /*
-* The mbed lpc1768 does not support the deepsleep mode
+* The mbed lpc1768 and lpc1778 does not support the deepsleep mode
 * as a debugger is connected to it (the mbed interface).
 *
 * As mentionned in an application note from NXP:
@@ -85,7 +85,7 @@ void deepsleep(void) {
     // wait for interrupt
     __WFI();
 
-#elif defined(TARGET_LPC1768)
+#elif defined(TARGET_LPC1768) || defined(TARGET_LPC1778)
     sleep();
 #endif
 }

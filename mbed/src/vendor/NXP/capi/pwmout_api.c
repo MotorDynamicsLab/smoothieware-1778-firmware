@@ -24,7 +24,7 @@
 #define TCR_CNT_EN       0x00000001
 #define TCR_RESET        0x00000002
 
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
 //  PORT ID, PWM ID, Pin function
 static const PinMap PinMap_PWM[] = {
     {P1_18, PWM_1, 2},
@@ -113,15 +113,17 @@ void pwmout_init(pwmout_t* obj, PinName pin) {
     if (pwm == (uint32_t)NC)
         error("PwmOut pin mapping failed");
 
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     obj->pwm = pwm;
     obj->MR = PWM_MATCH[pwm];
 
     // ensure the power is on
     LPC_SC->PCONP |= 1 << 6;
 
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
     // ensure clock to /4
     LPC_SC->PCLKSEL0 &= ~(0x3 << 12);     // pclk = /4
+#endif
     LPC_PWM1->PR = 0;                     // no pre-scale
 
     // ensure single PWM mode
@@ -172,7 +174,7 @@ void pwmout_write(pwmout_t* obj, float value) {
         value = 1.0;
     }
 
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     // set channel match to percentage
     uint32_t v = (uint32_t)((float)(LPC_PWM1->MR0) * value);
 
@@ -199,7 +201,7 @@ void pwmout_write(pwmout_t* obj, float value) {
 
 float pwmout_read(pwmout_t* obj) {
     float v;
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     v = (float)(*obj->MR) / (float)(LPC_PWM1->MR0);
 
 #elif defined(TARGET_LPC11U24)
@@ -222,7 +224,7 @@ void pwmout_period_ms(pwmout_t* obj, int ms) {
 
 // Set the PWM period, keeping the duty cycle the same.
 void pwmout_period_us(pwmout_t* obj, int us) {
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     // calculate number of ticks
     uint32_t ticks = pwm_clock_mhz * us;
 
@@ -275,7 +277,7 @@ void pwmout_pulsewidth_ms(pwmout_t* obj, int ms) {
 }
 
 void pwmout_pulsewidth_us(pwmout_t* obj, int us) {
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     // calculate number of ticks
     uint32_t v = pwm_clock_mhz * us;
 

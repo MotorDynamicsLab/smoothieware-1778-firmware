@@ -30,7 +30,7 @@ static inline int div_round_up(int x, int y) {
   return (x + (y - 1)) / y;
 }
 
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
 static const PinMap PinMap_ADC[] = {
     {P0_23, ADC0_0, 1},
     {P0_24, ADC0_1, 1},
@@ -38,7 +38,7 @@ static const PinMap PinMap_ADC[] = {
     {P0_26, ADC0_3, 1},
     {P1_30, ADC0_4, 3},
     {P1_31, ADC0_5, 3},
-#ifdef TARGET_LPC1768
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778)
     {P0_2,  ADC0_7, 2},
     {P0_3,  ADC0_6, 2},
 #endif
@@ -47,7 +47,7 @@ static const PinMap PinMap_ADC[] = {
 
 #if defined(TARGET_LPC2368)
 #   define ADC_RANGE    ADC_10BIT_RANGE
-#elif defined(TARGET_LPC1768)
+#elif defined(TARGET_LPC1768) || defined(TARGET_LPC1778)
 #   define ADC_RANGE    ADC_12BIT_RANGE
 #endif
 
@@ -99,6 +99,26 @@ void analogin_init(analogin_t *obj, PinName pin) {
                   | (0 << 24)     // START: 0 = no start
                   | (0 << 27);    // EDGE: not applicable
 
+#elif defined(TARGET_LPC1778)
+	// ensure power is turned on
+	LPC_SC->PCONP |= (1 << 12);
+
+	uint32_t PCLK = SystemCoreClock;
+
+	// calculate minimum clock divider
+	//  clkdiv = divider - 1
+	uint32_t MAX_ADC_CLK = 13000000;
+	uint32_t clkdiv = div_round_up(PCLK, MAX_ADC_CLK) - 1;
+
+	// Set the generic software-controlled ADC settings
+	LPC_ADC->ADCR = (0 << 0)      // SEL: 0 = no channels selected
+				| (clkdiv << 8) // CLKDIV: PCLK max ~= 25MHz, /25 to give safe 1MHz at fastest
+				| (0 << 16)     // BURST: 0 = software control
+				| (0 << 17)     // CLKS: not applicable
+				| (1 << 21)     // PDN: 1 = operational
+				| (0 << 24)     // START: 0 = no start
+				| (0 << 27);    // EDGE: not applicable
+
 #elif defined(TARGET_LPC11U24)
     // Power up ADC
     LPC_SYSCON->PDRUNCFG &= ~ (1 << 4);
@@ -138,6 +158,21 @@ static inline uint32_t adc_read(analogin_t *obj) {
     // Stop conversion
     LPC_ADC->ADCR &= ~(1 << 24);
 
+#elif defined(TARGET_LPC1778)
+	// Select the appropriate channel and start conversion
+	LPC_ADC->ADCR &= ~0xFF;
+	LPC_ADC->ADCR |= 1 << (int)obj->adc;
+	LPC_ADC->ADCR |= 1 << 24;
+
+	// Repeatedly get the sample data until DONE bit
+	unsigned int data;
+	do {
+		data = LPC_ADC->ADGDR;
+	} while ((data & ((unsigned int)1 << 31)) == 0);
+
+	// Stop conversion
+	LPC_ADC->ADCR &= ~(1 << 24);
+
 #elif defined(TARGET_LPC11U24)
     // Select the appropriate channel and start conversion
     LPC_ADC->CR &= ~0xFF;
@@ -154,7 +189,7 @@ static inline uint32_t adc_read(analogin_t *obj) {
     LPC_ADC->CR &= ~(1 << 24);
 #endif
 
-#if defined(TARGET_LPC1768)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778)
     return (data >> 4) & ADC_RANGE; // 12 bit
 #elif defined(TARGET_LPC2368) || defined (TARGET_LPC11U24)
     return (data >> 6) & ADC_RANGE; // 10 bit
@@ -188,7 +223,7 @@ static inline uint32_t adc_read_u32(analogin_t *obj) {
 uint16_t analogin_read_u16(analogin_t *obj) {
     uint32_t value = adc_read_u32(obj);
 
-#if defined(TARGET_LPC1768)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778)
     return (value << 4) | ((value >> 8) & 0x000F); // 12 bit
 #elif defined(TARGET_LPC2368) || defined(TARGET_LPC11U24)
     return (value << 6) | ((value >> 4) & 0x003F); // 10 bit

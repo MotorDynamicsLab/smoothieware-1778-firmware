@@ -22,7 +22,7 @@
 #include "pinmap.h"
 #include "error.h"
 
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
 
 static const PinMap PinMap_SPI_SCLK[] = {
     {P0_7 , SPI_1, 2},
@@ -98,7 +98,7 @@ void spi_init(spi_t *obj, PinName mosi, PinName miso, PinName sclk, PinName ssel
     SPIName spi_ssel = (SPIName)pinmap_peripheral(ssel, PinMap_SPI_SSEL);
     SPIName spi_data = (SPIName)pinmap_merge(spi_mosi, spi_miso);
     SPIName spi_cntl = (SPIName)pinmap_merge(spi_sclk, spi_ssel);
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     obj->spi = (LPC_SSP_TypeDef*)pinmap_merge(spi_data, spi_cntl);
 #elif defined(TARGET_LPC11U24)
     obj->spi = (LPC_SSPx_Type*)pinmap_merge(spi_data, spi_cntl);
@@ -108,7 +108,7 @@ void spi_init(spi_t *obj, PinName mosi, PinName miso, PinName sclk, PinName ssel
     }
 
     // enable power and clocking
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     switch ((int)obj->spi) {
         case SPI_0: LPC_SC->PCONP |= 1 << 21; break;
         case SPI_1: LPC_SC->PCONP |= 1 << 10; break;

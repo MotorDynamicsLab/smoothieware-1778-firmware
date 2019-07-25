@@ -45,6 +45,30 @@ static const PinMap PinMap_I2C_SCL[] = {
 #define I2C_SCLL(x, val)    (x->i2c->I2SCLL = val)
 #define I2C_SCLH(x, val)    (x->i2c->I2SCLH = val)
 
+#elif defined(TARGET_LPC1778)
+static const PinMap PinMap_I2C_SDA[] = {
+	{P0_0 , I2C_1, 3},
+	{P0_10, I2C_2, 2},
+	{P0_19, I2C_1, 3},
+	{P0_27, I2C_0, 1},
+	{NC   , NC   , 0}
+};
+
+static const PinMap PinMap_I2C_SCL[] = {
+	{P0_1 , I2C_1, 3},
+	{P0_11, I2C_2, 2},
+	{P0_20, I2C_1, 3},
+	{P0_28, I2C_0, 1},
+	{NC   , NC,    0}
+};
+
+#define I2C_CONSET(x)       (x->i2c->CONSET)
+#define I2C_CONCLR(x)       (x->i2c->CONCLR)
+#define I2C_STAT(x)         (x->i2c->STAT)
+#define I2C_DAT(x)          (x->i2c->DAT)
+#define I2C_SCLL(x, val)    (x->i2c->SCLL = val)
+#define I2C_SCLH(x, val)    (x->i2c->SCLH = val)
+
 #elif defined(TARGET_LPC11U24)
 static const PinMap PinMap_I2C_SDA[] = {
     {P0_5, I2C_0, 1},
@@ -109,7 +133,7 @@ static void i2c_interface_enable(i2c_t *obj) {
 }
 
 static void i2c_power_enable(i2c_t *obj) {
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     switch ((int)obj->i2c) {
         case I2C_0: LPC_SC->PCONP |= 1 << 7; break;
         case I2C_1: LPC_SC->PCONP |= 1 << 19; break;
@@ -125,7 +149,7 @@ void i2c_init(i2c_t *obj, PinName sda, PinName scl) {
     // determine the SPI to use
     I2CName i2c_sda = (I2CName)pinmap_peripheral(sda, PinMap_I2C_SDA);
     I2CName i2c_scl = (I2CName)pinmap_peripheral(scl, PinMap_I2C_SCL);
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     obj->i2c = (LPC_I2C_TypeDef *)pinmap_merge(i2c_sda, i2c_scl);
 #elif defined(TARGET_LPC11U24)
     obj->i2c = (LPC_I2C_Type *)pinmap_merge(i2c_sda, i2c_scl);
@@ -220,7 +244,7 @@ static int i2c_do_read(i2c_t *obj, int last) {
 }
 
 void i2c_frequency(i2c_t *obj, int hz) {
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368)
     // [TODO] set pclk to /4
     uint32_t PCLK = SystemCoreClock / 4;
 #elif defined(TARGET_LPC11U24)
@@ -444,7 +468,7 @@ void i2c_slave_address(i2c_t *obj, int idx, uint32_t address, uint32_t mask) {
     if ((idx >= 0) && (idx <= 3)) {
         addr = ((uint32_t)obj->i2c) + I2C_addr_offset[0][idx];
         *((uint32_t *) addr) = address & 0xFF;
-#ifdef TARGET_LPC1768
+#if defined(TARGET_LPC1768)  || defined(TARGET_LPC1778)
         addr = ((uint32_t)obj->i2c) + I2C_addr_offset[1][idx];
         *((uint32_t *) addr) = mask & 0xFE;
 #endif

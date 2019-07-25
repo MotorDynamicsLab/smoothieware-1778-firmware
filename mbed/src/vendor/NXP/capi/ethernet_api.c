@@ -426,9 +426,31 @@ int ethernet_init() {
 
   LPC_SC->PCONP |= 0x40000000;                       /* Power Up the EMAC controller. */
 
-
+#if defined(TARGET_LPC1778)
+  LPC_IOCON->P1_0 &= ~0x07;                  /* Enable P1 Ethernet Pins. */
+  LPC_IOCON->P1_0 |= 1;
+  LPC_IOCON->P1_1 &= ~0x07;                  /* Enable P1 Ethernet Pins. */
+  LPC_IOCON->P1_1 |= 1;
+  LPC_IOCON->P1_4 &= ~0x07;                  /* Enable P1 Ethernet Pins. */
+  LPC_IOCON->P1_4 |= 1;
+  LPC_IOCON->P1_8 &= ~0x07;                  /* Enable P1 Ethernet Pins. */
+  LPC_IOCON->P1_8 |= 1;
+  LPC_IOCON->P1_9 &= ~0x07;                  /* Enable P1 Ethernet Pins. */
+  LPC_IOCON->P1_9 |= 1;
+  LPC_IOCON->P1_10 &= ~0x07;                  /* Enable P1 Ethernet Pins. */
+  LPC_IOCON->P1_10 |= 1;
+  LPC_IOCON->P1_14 &= ~0x07;                  /* Enable P1 Ethernet Pins. */
+  LPC_IOCON->P1_14 |= 1;
+  LPC_IOCON->P1_15 &= ~0x07;                  /* Enable P1 Ethernet Pins. */
+  LPC_IOCON->P1_15 |= 1;
+  LPC_IOCON->P1_16 &= ~0x07;                  /* Enable P1 Ethernet Pins. */
+  LPC_IOCON->P1_16 |= 1;
+  LPC_IOCON->P1_17 &= ~0x07;                  /* Enable P1 Ethernet Pins. */
+  LPC_IOCON->P1_17 |= 1;
+#else
   LPC_PINCON->PINSEL2 = 0x50150105;                  /* Enable P1 Ethernet Pins. */
   LPC_PINCON->PINSEL3 = (LPC_PINCON->PINSEL3 & ~0x0000000F) | 0x00000005;
+#endif
 
    /* Reset all EMAC internal modules. */
   LPC_EMAC->MAC1    = MAC1_RES_TX | MAC1_RES_MCS_TX | MAC1_RES_RX |
@@ -515,8 +537,21 @@ void ethernet_free() {
   LPC_EMAC->IntClear   =  0xFFFF;
 
   LPC_SC->PCONP   &= ~0x40000000;       /* Power down the EMAC controller. */
+#if defined(TARGET_LPC1778)
+  LPC_IOCON->P1_0 &= ~0x07;                  /* Disable P1 Ethernet Pins. */
+  LPC_IOCON->P1_1 &= ~0x07;                  /* Disable P1 Ethernet Pins. */
+  LPC_IOCON->P1_4 &= ~0x07;                  /* Disable P1 Ethernet Pins. */
+  LPC_IOCON->P1_8 &= ~0x07;                  /* Disable P1 Ethernet Pins. */
+  LPC_IOCON->P1_9 &= ~0x07;                  /* Disable P1 Ethernet Pins. */
+  LPC_IOCON->P1_10 &= ~0x07;                 /* Disable P1 Ethernet Pins. */
+  LPC_IOCON->P1_14 &= ~0x07;                 /* Disable P1 Ethernet Pins. */
+  LPC_IOCON->P1_15 &= ~0x07;                 /* Disable P1 Ethernet Pins. */
+  LPC_IOCON->P1_16 &= ~0x07;                 /* Disable P1 Ethernet Pins. */
+  LPC_IOCON->P1_17 &= ~0x07;                 /* Disable P1 Ethernet Pins. */
+#else
   LPC_PINCON->PINSEL2 &= ~0x50150105;   /* Disable P1 ethernet pins. */
   LPC_PINCON->PINSEL3  = (LPC_PINCON->PINSEL3 & ~0x0000000F) | 0x00000000;
+#endif
 }
 
 // if(TxProduceIndex == TxConsumeIndex) buffer array is empty

@@ -78,11 +78,13 @@ static inline void can_enable(can_t *obj) {
 
 static int can_pclk(can_t *obj) {
     int value = 0;
+
+#ifndef TARGET_LPC1778
     switch ((int)obj->dev) {
         case CAN_1: value = (LPC_SC->PCLKSEL0 & (0x3 << 26)) >> 26; break;
         case CAN_2: value = (LPC_SC->PCLKSEL0 & (0x3 << 28)) >> 28; break;
     }
-
+#endif
     switch (value) {
         case 1: return 1;
         case 2: return 2;
