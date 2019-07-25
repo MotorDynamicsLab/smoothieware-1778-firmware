@@ -56,7 +56,11 @@
 #include "libs/Watchdog.h"
 
 #include "version.h"
+#if defined(TARGET_LPC1768)
 #include "system_LPC17xx.h"
+#elif defined(TARGET_LPC1778)
+#include "system_LPC177x_8x.h"
+#endif
 #include "platform_memory.h"
 
 #include "mbed.h"
@@ -82,18 +86,17 @@ USBMSD *msc= NULL;
 
 SDFAT mounter __attribute__ ((section ("AHBSRAM0"))) ("sd", &sd);
 
-GPIO leds[5] = {
-    GPIO(P1_18),
-    GPIO(P1_19),
-    GPIO(P1_20),
-    GPIO(P1_21),
-    GPIO(P4_28)
+GPIO leds[4] = {
+    GPIO(LED1),
+    GPIO(LED2),
+    GPIO(LED3),
+    GPIO(LED4),
 };
 
 void init() {
 
     // Default pins to low status
-    for (int i = 0; i < 5; i++){
+    for (int i = 0; i < 4; i++){
         leds[i].output();
         leds[i]= 0;
     }

@@ -50,6 +50,8 @@ ADC::ADC(int sample_rate, int cclk_div)
 #elif defined(TARGET_LPC1778)
 	//Power up the ADC
 	LPC_SC->PCONP |= (1 << 12);
+	//Work out CCLK
+	adc_clk_freq = CLKS_PER_SAMPLE * sample_rate;
 	pclk = PeripheralClock;
 #endif
     clock_div=pclk / adc_clk_freq;
