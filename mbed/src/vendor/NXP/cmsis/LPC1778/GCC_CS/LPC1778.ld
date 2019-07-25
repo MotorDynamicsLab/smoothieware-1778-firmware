@@ -28,8 +28,8 @@ MEMORY
   
   ram (rwx) : ORIGIN = 0x100000C8, LENGTH = 0x7F38
   
-  ram1(rwx) : ORIGIN = 0x2007C000, LENGTH = 16K
-  ram2(rwx) : ORIGIN = 0x20080000, LENGTH = 16K
+  ram1(rwx) : ORIGIN = 0x20000000, LENGTH = 16K
+  ram2(rwx) : ORIGIN = 0x20004000, LENGTH = 16K
 }
 
 /* These force the linker to search for particular symbols from
