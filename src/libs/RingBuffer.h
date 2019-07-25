@@ -31,7 +31,11 @@ template<class kind, int length> class RingBuffer {
         volatile int          head;
 };
 
+#if defined(TARGET_LPC1768)
 #include "sLPC17xx.h"
+#elif defined(TARGET_LPC1778)
+#include "sLPC177x_8x.h"
+#endif
 
 template<class kind, int length> RingBuffer<kind, length>::RingBuffer(){
     this->tail = this->head = 0;

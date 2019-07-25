@@ -1,8 +1,11 @@
 #include "Watchdog.h"
 #include "Kernel.h"
 
+#if defined(TARGET_LPC1768)
 #include <lpc17xx_wdt.h>
-
+#elif defined(TARGET_LPC1778)
+#include <lpc177x_8x_wwdt.h>
+#endif
 #include <mri.h>
 
 #include "gpio.h"
@@ -13,9 +16,15 @@ extern GPIO leds[];
 
 Watchdog::Watchdog(uint32_t timeout, WDT_ACTION action)
 {
+#if defined(TARGET_LPC1768)
     WDT_Init(WDT_CLKSRC_IRC, (action == WDT_MRI)?WDT_MODE_INT_ONLY:WDT_MODE_RESET);
     WDT_Start(timeout);
     WDT_Feed();
+#elif defined(TARGET_LPC1778)
+	WWDT_SetMode(WWDT_RESET_MODE, ENABLE);
+	WWDT_Start(timeout);
+	WWDT_Feed();
+#endif
     if(action == WDT_MRI) {
         // enable the interrupt
         NVIC_EnableIRQ(WDT_IRQn);
@@ -25,7 +34,11 @@ Watchdog::Watchdog(uint32_t timeout, WDT_ACTION action)
 
 void Watchdog::feed()
 {
+#if defined(TARGET_LPC1768)
     WDT_Feed();
+#elif defined(TARGET_LPC1778)
+	WWDT_Feed();
+#endif
 }
 
 void Watchdog::on_module_loaded()
@@ -52,7 +65,12 @@ extern "C" void WDT_IRQHandler(void)
         leds[3]= 1;
     }
 
+#if defined(TARGET_LPC1768)
     WDT_ClrTimeOutFlag(); // bootloader uses this flag to enter DFU mode
     WDT_Feed();
+#elif defined(TARGET_LPC1778)
+	WWDT_ClrTimeOutFlag(); // bootloader uses this flag to enter DFU mode
+	WWDT_Feed();
+#endif
     __debugbreak();
 }

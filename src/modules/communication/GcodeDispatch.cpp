@@ -24,7 +24,11 @@
 #include "PublicData.h"
 #include "SimpleShell.h"
 #include "utils.h"
+#if defined(TARGET_LPC1768)
 #include "LPC17xx.h"
+#elif defined(TARGET_LPC1778)
+#include "LPC177x_8x.h"
+#endif
 #include "version.h"
 
 #define panel_display_message_checksum CHECKSUM("display_message")

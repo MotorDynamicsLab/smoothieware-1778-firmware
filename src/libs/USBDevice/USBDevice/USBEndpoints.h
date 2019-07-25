@@ -63,7 +63,7 @@ public:
 };
 
 /* Include configuration for specific target */
-#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368) || defined(__LPC17XX__)
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC1778) || defined(TARGET_LPC2368) || defined(__LPC17XX__)
     #include "USBEndpoints_LPC17_LPC23.h"
 #elif defined(TARGET_LPC11U24)
     #include "USBEndpoints_LPC11U.h"

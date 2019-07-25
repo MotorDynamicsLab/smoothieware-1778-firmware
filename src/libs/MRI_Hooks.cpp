@@ -1,6 +1,10 @@
 #include "MRI_Hooks.h"
 
+#if defined(TARGET_LPC1768)
 #include <sLPC17xx.h>
+#elif defined(TARGET_LPC1778)
+#include <sLPC177x_8x.h>
+#endif
 #include <mri.h>
 
 // This is used by MRI to turn pins on and off when entering and leaving MRI. Useful for not burning everything down

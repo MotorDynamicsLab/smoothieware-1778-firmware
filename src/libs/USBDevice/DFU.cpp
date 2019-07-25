@@ -1,7 +1,11 @@
 #include "DFU.h"
 
 // #include <LPC17xx.h>
+#if defined(TARGET_LPC1768)
 #include "lpc17xx_wdt.h"
+#elif defined(TARGET_LPC1778)
+#include "lpc177x_8x_wwdt.h"
+#endif
 
 #include <stdio.h>
 #include <mri.h>
@@ -52,8 +56,13 @@ bool DFU::USBEvent_Request(CONTROL_TRANSFER &control)
         {
 //             usb->disconnect();
             prep_for_detach = 128;
+#if defined(TARGET_LPC1768)
             WDT_Init(WDT_CLKSRC_IRC, WDT_MODE_RESET);
-            WDT_Start(250000); // 0.25 seconds
+			WDT_Start(250000); // 0.25 seconds
+#elif defined(TARGET_LPC1778)
+			WWDT_SetMode(WWDT_RESET_MODE, ENABLE);
+			WWDT_Start(250000);
+#endif
             //             for (;;);
             return true;
         }

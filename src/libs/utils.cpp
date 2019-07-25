@@ -7,8 +7,13 @@
 
 #include "libs/Kernel.h"
 #include "libs/utils.h"
+#if defined(TARGET_LPC1768)
 #include "system_LPC17xx.h"
 #include "LPC17xx.h"
+#elif defined(TARGET_LPC1778)
+#include "system_LPC177x_8x.h"
+#include "LPC177x_8x.h"
+#endif
 #include "utils.h"
 
 #include <string>
@@ -157,6 +162,7 @@ bool file_exists( const string file_name )
 // Prepares and executes a watchdog reset for dfu or reboot
 void system_reset( bool dfu )
 {
+#if defined(TARGET_LPC1768) || defined(TARGET_LPC2368)
     if(dfu) {
         LPC_WDT->WDCLKSEL = 0x1;                // Set CLK src to PCLK
         uint32_t clk = SystemCoreClock / 16;    // WD has a fixed /4 prescaler, PCLK default is /4
@@ -167,6 +173,9 @@ void system_reset( bool dfu )
     } else {
         NVIC_SystemReset();
     }
+#elif defined(TARGET_LPC1778)
+	NVIC_SystemReset();
+#endif
 }
 
 // Convert a path indication ( absolute or relative ) into a path ( absolute )

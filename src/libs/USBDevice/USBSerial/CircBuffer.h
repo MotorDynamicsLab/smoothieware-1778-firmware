@@ -20,7 +20,11 @@
 #define CIRCBUFFER_H
 
 #include <stdlib.h>
+#if defined(TARGET_LPC1768)
 #include "sLPC17xx.h"
+#elif defined(TARGET_LPC1778)
+#include "sLPC177x_8x.h"
+#endif
 #include "platform_memory.h"
 
 template <class T>

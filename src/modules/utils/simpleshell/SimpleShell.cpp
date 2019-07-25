@@ -42,8 +42,13 @@
 #include "utils.h"
 #include "AutoPushPop.h"
 
+#if defined(TARGET_LPC1768)
 #include "system_LPC17xx.h"
 #include "LPC17xx.h"
+#elif defined(TARGET_LPC1778)
+#include "system_LPC177x_8x.h"
+#include "LPC177x_8x.h"
+#endif
 
 #include "mbed.h" // for wait_ms()
 
@@ -653,7 +658,7 @@ void SimpleShell::version_command( string parameters, StreamOutput *stream)
 {
     Version vers;
     uint32_t dev = getDeviceType();
-    const char *mcu = (dev & 0x00100000) ? "LPC1769" : "LPC1768";
+    const char *mcu = (dev & 0x00100000) ? "LPC1778" : "LPC1768";
     stream->printf("Build version: %s, Build date: %s, MCU: %s, System Clock: %ldMHz\r\n", vers.get_build(), vers.get_build_date(), mcu, SystemCoreClock / 1000000);
     #ifdef CNC
     stream->printf("  CNC Build ");

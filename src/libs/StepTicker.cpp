@@ -16,7 +16,11 @@
 #include "Block.h"
 #include "Conveyor.h"
 
+#if defined(TARGET_LPC1768)
 #include "system_LPC17xx.h" // mbed.h lib
+#elif defined(TARGET_LPC1778)
+#include "system_LPC177x_8x.h"
+#endif
 #include <math.h>
 #include <mri.h>
 

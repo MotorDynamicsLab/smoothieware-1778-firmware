@@ -1,7 +1,11 @@
 #ifndef _LPC17XX_ETHERNET_H
 #define _LPC17XX_ETHERNET_H
 
+#if defined(TARGET_LPC1768)
 #include "lpc17xx_emac.h"
+#elif defined(TARGET_LPC1778)
+#include "lpc177x_8x_emac.h"
+#endif
 
 #include "Module.h"
 #include "net_util.h"

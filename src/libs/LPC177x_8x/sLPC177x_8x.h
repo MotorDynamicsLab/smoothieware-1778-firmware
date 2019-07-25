@@ -36,57 +36,57 @@
 typedef enum IRQn
 {
 	/******  Cortex-M3 Processor Exceptions Numbers ***************************************************/
-	NonMaskableInt_IRQn = -14,      /*!< 2 Non Maskable Interrupt                         */
+	NonMaskableInt_IRQn = -14,        /*!< 2 Non Maskable Interrupt                         */
 	MemoryManagement_IRQn = -12,      /*!< 4 Cortex-M3 Memory Management Interrupt          */
-	BusFault_IRQn = -11,      /*!< 5 Cortex-M3 Bus Fault Interrupt                  */
-	UsageFault_IRQn = -10,      /*!< 6 Cortex-M3 Usage Fault Interrupt                */
-	SVCall_IRQn = -5,       /*!< 11 Cortex-M3 SV Call Interrupt                   */
-	DebugMonitor_IRQn = -4,       /*!< 12 Cortex-M3 Debug Monitor Interrupt             */
-	PendSV_IRQn = -2,       /*!< 14 Cortex-M3 Pend SV Interrupt                   */
-	SysTick_IRQn = -1,       /*!< 15 Cortex-M3 System Tick Interrupt               */
+	BusFault_IRQn = -11,              /*!< 5 Cortex-M3 Bus Fault Interrupt                  */
+	UsageFault_IRQn = -10,            /*!< 6 Cortex-M3 Usage Fault Interrupt                */
+	SVCall_IRQn = -5,                 /*!< 11 Cortex-M3 SV Call Interrupt                   */
+	DebugMonitor_IRQn = -4,           /*!< 12 Cortex-M3 Debug Monitor Interrupt             */
+	PendSV_IRQn = -2,                 /*!< 14 Cortex-M3 Pend SV Interrupt                   */
+	SysTick_IRQn = -1,                /*!< 15 Cortex-M3 System Tick Interrupt               */
 
-  /******  LPC177x_8x Specific Interrupt Numbers *******************************************************/
-  WDT_IRQn = 0,        /*!< Watchdog Timer Interrupt                         */
-  TIMER0_IRQn = 1,        /*!< Timer0 Interrupt                                 */
-  TIMER1_IRQn = 2,        /*!< Timer1 Interrupt                                 */
-  TIMER2_IRQn = 3,        /*!< Timer2 Interrupt                                 */
-  TIMER3_IRQn = 4,        /*!< Timer3 Interrupt                                 */
-  UART0_IRQn = 5,        /*!< UART0 Interrupt                                  */
-  UART1_IRQn = 6,        /*!< UART1 Interrupt                                  */
-  UART2_IRQn = 7,        /*!< UART2 Interrupt                                  */
-  UART3_IRQn = 8,        /*!< UART3 Interrupt                                  */
-  PWM1_IRQn = 9,        /*!< PWM1 Interrupt                                   */
-  I2C0_IRQn = 10,       /*!< I2C0 Interrupt                                   */
-  I2C1_IRQn = 11,       /*!< I2C1 Interrupt                                   */
-  I2C2_IRQn = 12,       /*!< I2C2 Interrupt                                   */
-  Reserved0_IRQn = 13,       /*!< Reserved                                         */
-  SSP0_IRQn = 14,       /*!< SSP0 Interrupt                                   */
-  SSP1_IRQn = 15,       /*!< SSP1 Interrupt                                   */
-  PLL0_IRQn = 16,       /*!< PLL0 Lock (Main PLL) Interrupt                   */
-  RTC_IRQn = 17,       /*!< Real Time Clock Interrupt                        */
-  EINT0_IRQn = 18,       /*!< External Interrupt 0 Interrupt                   */
-  EINT1_IRQn = 19,       /*!< External Interrupt 1 Interrupt                   */
-  EINT2_IRQn = 20,       /*!< External Interrupt 2 Interrupt                   */
-  EINT3_IRQn = 21,       /*!< External Interrupt 3 Interrupt                   */
-  ADC_IRQn = 22,       /*!< A/D Converter Interrupt                          */
-  BOD_IRQn = 23,       /*!< Brown-Out Detect Interrupt                       */
-  USB_IRQn = 24,       /*!< USB Interrupt                                    */
-  CAN_IRQn = 25,       /*!< CAN Interrupt                                    */
-  DMA_IRQn = 26,       /*!< General Purpose DMA Interrupt                    */
-  I2S_IRQn = 27,       /*!< I2S Interrupt                                    */
-  ENET_IRQn = 28,       /*!< Ethernet Interrupt                               */
-  MCI_IRQn = 29,       /*!< SD/MMC card I/F Interrupt                        */
-  MCPWM_IRQn = 30,       /*!< Motor Control PWM Interrupt                      */
-  QEI_IRQn = 31,       /*!< Quadrature Encoder Interface Interrupt           */
-  PLL1_IRQn = 32,       /*!< PLL1 Lock (USB PLL) Interrupt                    */
-  USBActivity_IRQn = 33,       /*!< USB Activity interrupt                           */
-  CANActivity_IRQn = 34,       /*!< CAN Activity interrupt                           */
-  UART4_IRQn = 35,       /*!< UART4 Interrupt                                  */
-  SSP2_IRQn = 36,       /*!< SSP2 Interrupt                                   */
-  LCD_IRQn = 37,       /*!< LCD Interrupt                                    */
-  GPIO_IRQn = 38,       /*!< GPIO Interrupt                                   */
-  PWM0_IRQn = 39,       /*!< PWM0 Interrupt                                   */
-  EEPROM_IRQn = 40,       /*!< EEPROM Interrupt                           */
+	/******  LPC177x_8x Specific Interrupt Numbers *******************************************************/
+	WDT_IRQn = 0,                     /*!< Watchdog Timer Interrupt                         */
+	TIMER0_IRQn = 1,                  /*!< Timer0 Interrupt                                 */
+	TIMER1_IRQn = 2,                  /*!< Timer1 Interrupt                                 */
+	TIMER2_IRQn = 3,                  /*!< Timer2 Interrupt                                 */
+	TIMER3_IRQn = 4,                  /*!< Timer3 Interrupt                                 */
+	UART0_IRQn = 5,                   /*!< UART0 Interrupt                                  */
+	UART1_IRQn = 6,                   /*!< UART1 Interrupt                                  */
+	UART2_IRQn = 7,                   /*!< UART2 Interrupt                                  */
+	UART3_IRQn = 8,                   /*!< UART3 Interrupt                                  */
+	PWM1_IRQn = 9,                    /*!< PWM1 Interrupt                                   */
+	I2C0_IRQn = 10,                   /*!< I2C0 Interrupt                                   */
+	I2C1_IRQn = 11,                   /*!< I2C1 Interrupt                                   */
+	I2C2_IRQn = 12,                   /*!< I2C2 Interrupt                                   */
+	Reserved0_IRQn = 13,              /*!< Reserved                                         */
+	SSP0_IRQn = 14,                   /*!< SSP0 Interrupt                                   */
+	SSP1_IRQn = 15,                   /*!< SSP1 Interrupt                                   */
+	PLL0_IRQn = 16,                   /*!< PLL0 Lock (Main PLL) Interrupt                   */
+	RTC_IRQn = 17,                    /*!< Real Time Clock Interrupt                        */
+	EINT0_IRQn = 18,                  /*!< External Interrupt 0 Interrupt                   */
+	EINT1_IRQn = 19,                  /*!< External Interrupt 1 Interrupt                   */
+	EINT2_IRQn = 20,                  /*!< External Interrupt 2 Interrupt                   */
+	EINT3_IRQn = 21,                  /*!< External Interrupt 3 Interrupt                   */
+	ADC_IRQn = 22,                    /*!< A/D Converter Interrupt                          */
+	BOD_IRQn = 23,                    /*!< Brown-Out Detect Interrupt                       */
+	USB_IRQn = 24,                    /*!< USB Interrupt                                    */
+	CAN_IRQn = 25,                    /*!< CAN Interrupt                                    */
+	DMA_IRQn = 26,                    /*!< General Purpose DMA Interrupt                    */
+	I2S_IRQn = 27,                    /*!< I2S Interrupt                                    */
+	ENET_IRQn = 28,                   /*!< Ethernet Interrupt                               */
+	MCI_IRQn = 29,                    /*!< SD/MMC card I/F Interrupt                        */
+	MCPWM_IRQn = 30,                  /*!< Motor Control PWM Interrupt                      */
+	QEI_IRQn = 31,                    /*!< Quadrature Encoder Interface Interrupt           */
+	PLL1_IRQn = 32,                   /*!< PLL1 Lock (USB PLL) Interrupt                    */
+	USBActivity_IRQn = 33,            /*!< USB Activity interrupt                           */
+	CANActivity_IRQn = 34,            /*!< CAN Activity interrupt                           */
+	UART4_IRQn = 35,                  /*!< UART4 Interrupt                                  */
+	SSP2_IRQn = 36,                   /*!< SSP2 Interrupt                                   */
+	LCD_IRQn = 37,                    /*!< LCD Interrupt                                    */
+	GPIO_IRQn = 38,                   /*!< GPIO Interrupt                                   */
+	PWM0_IRQn = 39,                   /*!< PWM0 Interrupt                                   */
+	EEPROM_IRQn = 40,                 /*!< EEPROM Interrupt                                 */
 } IRQn_Type;
 
 
@@ -115,6 +115,7 @@ typedef enum IRQn
 #endif
 
 /*------------- System Control (SC) ------------------------------------------*/
+/** @brief System Control (SC) register structure definition */
 typedef struct
 {
 	__IO uint32_t FLASHCFG;                   /*!< Offset: 0x000 (R/W)  Flash Accelerator Configuration Register */
@@ -136,8 +137,8 @@ typedef struct
 	__IO uint32_t CCLKSEL;                    /*!< Offset: 0x104 (R/W)  CPU Clock Selection Register */
 	__IO uint32_t USBCLKSEL;                  /*!< Offset: 0x108 (R/W)  USB Clock Selection Register */
 	__IO uint32_t CLKSRCSEL;                  /*!< Offset: 0x10C (R/W)  Clock Source Select Register */
-	__IO uint32_t	CANSLEEPCLR;                /*!< Offset: 0x110 (R/W)  CAN Sleep Clear Register */
-	__IO uint32_t	CANWAKEFLAGS;               /*!< Offset: 0x114 (R/W)  CAN Wake-up Flags Register */
+	__IO uint32_t CANSLEEPCLR;                /*!< Offset: 0x110 (R/W)  CAN Sleep Clear Register */
+	__IO uint32_t CANWAKEFLAGS;               /*!< Offset: 0x114 (R/W)  CAN Wake-up Flags Register */
 	uint32_t RESERVED4[10];
 	__IO uint32_t EXTINT;                     /*!< Offset: 0x140 (R/W)  External Interrupt Flag Register */
 	uint32_t RESERVED5[1];
@@ -149,51 +150,20 @@ typedef struct
 	__IO uint32_t SCS;                        /*!< Offset: 0x1A0 (R/W)  System Controls and Status Register */
 	__IO uint32_t IRCTRIM;                    /*!< Offset: 0x1A4 (R/W) Clock Dividers                     */
 	__IO uint32_t PCLKSEL;                    /*!< Offset: 0x1A8 (R/W)  Peripheral Clock Selection Register */
-	uint32_t RESERVED8[3];
+	uint32_t RESERVED8;
+	__IO uint32_t PBOOST;						          /*!< Offset: 0x1B0 (R/W)  Power Boost control register */
+	uint32_t RESERVED9;
 	__IO uint32_t LCD_CFG;                    /*!< Offset: 0x1B8 (R/W)  LCD Configuration and clocking control Register */
-	uint32_t RESERVED9[1];
+	uint32_t RESERVED10[1];
 	__IO uint32_t USBIntSt;                   /*!< Offset: 0x1C0 (R/W)  USB Interrupt Status Register */
 	__IO uint32_t DMAREQSEL;                  /*!< Offset: 0x1C4 (R/W)  DMA Request Select Register */
 	__IO uint32_t CLKOUTCFG;                  /*!< Offset: 0x1C8 (R/W)  Clock Output Configuration Register */
 	__IO uint32_t RSTCON0;                    /*!< Offset: 0x1CC (R/W)  RESET Control0 Register */
 	__IO uint32_t RSTCON1;                    /*!< Offset: 0x1D0 (R/W)  RESET Control1 Register */
-	uint32_t RESERVED10[2];
+	uint32_t RESERVED11[2];
 	__IO uint32_t EMCDLYCTL;                  /*!< Offset: 0x1DC (R/W) SDRAM programmable delays          */
 	__IO uint32_t EMCCAL;                     /*!< Offset: 0x1E0 (R/W) Calibration of programmable delays */
 } LPC_SC_TypeDef;
-
-/*------------- Pin Connect Block (PINCON) -----------------------------------*/
-typedef struct
-{
-	__IO uint32_t PINSEL0;
-	__IO uint32_t PINSEL1;
-	__IO uint32_t PINSEL2;
-	__IO uint32_t PINSEL3;
-	__IO uint32_t PINSEL4;
-	__IO uint32_t PINSEL5;
-	__IO uint32_t PINSEL6;
-	__IO uint32_t PINSEL7;
-	__IO uint32_t PINSEL8;
-	__IO uint32_t PINSEL9;
-	__IO uint32_t PINSEL10;
-	uint32_t RESERVED0[5];
-	__IO uint32_t PINMODE0;
-	__IO uint32_t PINMODE1;
-	__IO uint32_t PINMODE2;
-	__IO uint32_t PINMODE3;
-	__IO uint32_t PINMODE4;
-	__IO uint32_t PINMODE5;
-	__IO uint32_t PINMODE6;
-	__IO uint32_t PINMODE7;
-	__IO uint32_t PINMODE8;
-	__IO uint32_t PINMODE9;
-	__IO uint32_t PINMODE_OD0;
-	__IO uint32_t PINMODE_OD1;
-	__IO uint32_t PINMODE_OD2;
-	__IO uint32_t PINMODE_OD3;
-	__IO uint32_t PINMODE_OD4;
-	__IO uint32_t I2CPADCFG;
-} LPC_PINCON_TypeDef;
 
 /*------------- Pin Connect Block (PINCON) -----------------------------------*/
 typedef struct
@@ -487,7 +457,7 @@ typedef struct
 	__IO uint32_t MR3;                    /*!< Offset: 0x024 Match Register 3 (R/W) */
 	__IO uint32_t CCR;                    /*!< Offset: 0x028 Capture Control Register (R/W) */
 	__I  uint32_t CR0;                    /*!< Offset: 0x02C Capture Register 0 (R/ ) */
-	__I  uint32_t CR1;					/*!< Offset: 0x030 Capture Register 1 (R/ ) */
+	__I  uint32_t CR1;					  /*!< Offset: 0x030 Capture Register 1 (R/ ) */
 	uint32_t RESERVED0[2];
 	__IO uint32_t EMR;                    /*!< Offset: 0x03C External Match Register (R/W) */
 	uint32_t RESERVED1[12];
@@ -509,17 +479,17 @@ typedef struct
 	__IO uint32_t MR3;                    /*!< Offset: 0x024 Match Register 3 (R/W) */
 	__IO uint32_t CCR;                    /*!< Offset: 0x028 Capture Control Register (R/W) */
 	__I  uint32_t CR0;                    /*!< Offset: 0x02C Capture Register 0 (R/ ) */
-	__I  uint32_t CR1;					/*!< Offset: 0x030 Capture Register 1 (R/ ) */
-	__I  uint32_t CR2;					/*!< Offset: 0x034 Capture Register 2 (R/ ) */
-	__I  uint32_t CR3;					/*!< Offset: 0x038 Capture Register 3 (R/ ) */
+	__I  uint32_t CR1;					  /*!< Offset: 0x030 Capture Register 1 (R/ ) */
+	__I  uint32_t CR2;					  /*!< Offset: 0x034 Capture Register 2 (R/ ) */
+	__I  uint32_t CR3;					  /*!< Offset: 0x038 Capture Register 3 (R/ ) */
 	uint32_t RESERVED0;
-	__IO uint32_t MR4;					/*!< Offset: 0x040 Match Register 4 (R/W) */
-	__IO uint32_t MR5;					/*!< Offset: 0x044 Match Register 5 (R/W) */
-	__IO uint32_t MR6;					/*!< Offset: 0x048 Match Register 6 (R/W) */
-	__IO uint32_t PCR;					/*!< Offset: 0x04C PWM Control Register (R/W) */
-	__IO uint32_t LER;					/*!< Offset: 0x050 Load Enable Register (R/W) */
+	__IO uint32_t MR4;					  /*!< Offset: 0x040 Match Register 4 (R/W) */
+	__IO uint32_t MR5;					  /*!< Offset: 0x044 Match Register 5 (R/W) */
+	__IO uint32_t MR6;					  /*!< Offset: 0x048 Match Register 6 (R/W) */
+	__IO uint32_t PCR;					  /*!< Offset: 0x04C PWM Control Register (R/W) */
+	__IO uint32_t LER;					  /*!< Offset: 0x050 Load Enable Register (R/W) */
 	uint32_t RESERVED1[7];
-	__IO uint32_t CTCR;					/*!< Offset: 0x070 Counter Control Register (R/W) */
+	__IO uint32_t CTCR;					  /*!< Offset: 0x070 Counter Control Register (R/W) */
 } LPC_PWM_TypeDef;
 
 /*------------- Universal Asynchronous Receiver Transmitter (UARTx) -----------*/
@@ -661,36 +631,36 @@ typedef struct
 		__I  uint32_t  IIR;                   /*!< Offset: 0x008 Interrupt ID Register (R/ ) */
 		__O  uint32_t  FCR;                   /*!< Offset: 0x008 FIFO Control Register ( /W) */
 	};
-	__IO uint32_t  LCR;                   /*!< Offset: 0x00C Line Control Register (R/W) */
-	__IO uint32_t  MCR;                   /*!< Offset: 0x010 Modem control Register (R/W) */
-	__I  uint32_t  LSR;                   /*!< Offset: 0x014 Line Status Register (R/ ) */
-	__I  uint32_t  MSR;                   /*!< Offset: 0x018 Modem status Register (R/ ) */
-	__IO uint32_t  SCR;                   /*!< Offset: 0x01C Scratch Pad Register (R/W) */
-	__IO uint32_t  ACR;                   /*!< Offset: 0x020 Auto-baud Control Register (R/W) */
-	__IO uint32_t  ICR;                   /*!< Offset: 0x024 irDA Control Register (R/W) */
-	__IO uint32_t  FDR;                   /*!< Offset: 0x028 Fractional Divider Register (R/W) */
-	__IO uint32_t  OSR;                   /*!< Offset: 0x02C Over sampling Register (R/W) */
-	__O  uint32_t  POP;                   /*!< Offset: 0x030 NHP Pop Register (W) */
-	__IO uint32_t  MODE;                  /*!< Offset: 0x034 NHP Mode selection Register (W) */
+	__IO uint32_t  LCR;					      /*!< Offset: 0x00C Line Control Register (R/W) */
+	__IO uint32_t  MCR;					      /*!< Offset: 0x010 Modem control Register (R/W) */
+	__I  uint32_t  LSR;					      /*!< Offset: 0x014 Line Status Register (R/ ) */
+	__I  uint32_t  MSR;					      /*!< Offset: 0x018 Modem status Register (R/ ) */
+	__IO uint32_t  SCR;					      /*!< Offset: 0x01C Scratch Pad Register (R/W) */
+	__IO uint32_t  ACR;					      /*!< Offset: 0x020 Auto-baud Control Register (R/W) */
+	__IO uint32_t  ICR;					      /*!< Offset: 0x024 irDA Control Register (R/W) */
+	__IO uint32_t  FDR;					      /*!< Offset: 0x028 Fractional Divider Register (R/W) */
+	__IO uint32_t  OSR;					      /*!< Offset: 0x02C Over sampling Register (R/W) */
+	__O  uint32_t  POP;					      /*!< Offset: 0x030 NHP Pop Register (W) */
+	__IO uint32_t  MODE;				      /*!< Offset: 0x034 NHP Mode selection Register (W) */
 	uint32_t  RESERVED0[2];
-	__IO uint32_t  HDEN;                  /*!< Offset: 0x040 Half duplex Enable Register (R/W) */
+	__IO uint32_t  HDEN;				      /*!< Offset: 0x040 Half duplex Enable Register (R/W) */
 	uint32_t  RESERVED1;
-	__IO uint32_t  SCI_CTRL;				/*!< Offset: 0x048 Smart card Interface Control Register (R/W) */
-	__IO uint32_t  RS485CTRL;             /*!< Offset: 0x04C RS-485/EIA-485 Control Register (R/W) */
-	__IO uint32_t  ADRMATCH;              /*!< Offset: 0x050 RS-485/EIA-485 address match Register (R/W) */
-	__IO uint32_t  RS485DLY;              /*!< Offset: 0x054 RS-485/EIA-485 direction control delay Register (R/W) */
-	__IO uint32_t  SYNCCTRL;              /*!< Offset: 0x058 Synchronous Mode Control Register (R/W ) */
-	__IO uint32_t  TER;                   /*!< Offset: 0x05C Transmit Enable Register (R/W) */
+	__IO uint32_t  SCI_CTRL;			      /*!< Offset: 0x048 Smart card Interface Control Register (R/W) */
+	__IO uint32_t  RS485CTRL;			      /*!< Offset: 0x04C RS-485/EIA-485 Control Register (R/W) */
+	__IO uint32_t  ADRMATCH;			      /*!< Offset: 0x050 RS-485/EIA-485 address match Register (R/W) */
+	__IO uint32_t  RS485DLY;			      /*!< Offset: 0x054 RS-485/EIA-485 direction control delay Register (R/W) */
+	__IO uint32_t  SYNCCTRL;			      /*!< Offset: 0x058 Synchronous Mode Control Register (R/W ) */
+	__IO uint32_t  TER;					      /*!< Offset: 0x05C Transmit Enable Register (R/W) */
 	uint32_t  RESERVED2[989];
-	__I  uint32_t  CFG;                   /*!< Offset: 0xFD4 Configuration Register (R) */
-	__O  uint32_t  INTCE;                 /*!< Offset: 0xFD8 Interrupt Clear Enable Register (W) */
-	__O  uint32_t  INTSE;                 /*!< Offset: 0xFDC Interrupt Set Enable Register (W) */
-	__I  uint32_t  INTS;                  /*!< Offset: 0xFE0 Interrupt Status Register (R) */
-	__I  uint32_t  INTE;                  /*!< Offset: 0xFE4 Interrupt Enable Register (R) */
-	__O  uint32_t  INTCS;                 /*!< Offset: 0xFE8 Interrupt Clear Status Register (W) */
-	__O  uint32_t  INTSS;                 /*!< Offset: 0xFEC Interrupt Set Status Register (W) */
+	__I  uint32_t  CFG;					      /*!< Offset: 0xFD4 Configuration Register (R) */
+	__O  uint32_t  INTCE;				      /*!< Offset: 0xFD8 Interrupt Clear Enable Register (W) */
+	__O  uint32_t  INTSE;				      /*!< Offset: 0xFDC Interrupt Set Enable Register (W) */
+	__I  uint32_t  INTS;				      /*!< Offset: 0xFE0 Interrupt Status Register (R) */
+	__I  uint32_t  INTE;				      /*!< Offset: 0xFE4 Interrupt Enable Register (R) */
+	__O  uint32_t  INTCS;				      /*!< Offset: 0xFE8 Interrupt Clear Status Register (W) */
+	__O  uint32_t  INTSS;				      /*!< Offset: 0xFEC Interrupt Set Status Register (W) */
 	uint32_t  RESERVED3[3];
-	__I  uint32_t  MID;                   /*!< Offset: 0xFFC Module Identification Register (R) */
+	__I  uint32_t  MID;					      /*!< Offset: 0xFFC Module Identification Register (R) */
 } LPC_UART4_TypeDef;
 
 /*------------- Synchronous Serial Communication (SSP) -----------------------*/
@@ -834,12 +804,19 @@ typedef struct
 /*------------- Analog-to-Digital Converter (ADC) ----------------------------*/
 typedef struct
 {
-	__IO uint32_t CR;                     /*!< Offset: 0x000       A/D Control Register (R/W) */
-	__IO uint32_t GDR;                    /*!< Offset: 0x004       A/D Global Data Register (R/W) */
+	__IO uint32_t ADCR;
+	__IO uint32_t ADGDR;
 	uint32_t RESERVED0;
-	__IO uint32_t INTEN;                  /*!< Offset: 0x00C       A/D Interrupt Enable Register (R/W) */
-	__IO uint32_t DR[8];                  /*!< Offset: 0x010-0x02C A/D Channel 0..7 Data Register (R/W) */
-	__I  uint32_t STAT;                   /*!< Offset: 0x030       A/D Status Register (R/ ) */
+	__IO uint32_t ADINTEN;
+	__I  uint32_t ADDR0;
+	__I  uint32_t ADDR1;
+	__I  uint32_t ADDR2;
+	__I  uint32_t ADDR3;
+	__I  uint32_t ADDR4;
+	__I  uint32_t ADDR5;
+	__I  uint32_t ADDR6;
+	__I  uint32_t ADDR7;
+	__I  uint32_t ADSTAT;
 	__IO uint32_t ADTRM;
 } LPC_ADC_TypeDef;
 
@@ -1099,92 +1076,92 @@ typedef struct                          /* Channel Registers                  */
 /*------------- Universal Serial Bus (USB) -----------------------------------*/
 typedef struct
 {
-	__I  uint32_t Revision;             /* USB Host Registers                 */
-	__IO uint32_t Control;
-	__IO uint32_t CommandStatus;
-	__IO uint32_t InterruptStatus;
-	__IO uint32_t InterruptEnable;
-	__IO uint32_t InterruptDisable;
-	__IO uint32_t HCCA;
-	__I  uint32_t PeriodCurrentED;
-	__IO uint32_t ControlHeadED;
-	__IO uint32_t ControlCurrentED;
-	__IO uint32_t BulkHeadED;
-	__IO uint32_t BulkCurrentED;
-	__I  uint32_t DoneHead;
-	__IO uint32_t FmInterval;
-	__I  uint32_t FmRemaining;
-	__I  uint32_t FmNumber;
-	__IO uint32_t PeriodicStart;
-	__IO uint32_t LSTreshold;
-	__IO uint32_t RhDescriptorA;
-	__IO uint32_t RhDescriptorB;
-	__IO uint32_t RhStatus;
-	__IO uint32_t RhPortStatus1;
-	__IO uint32_t RhPortStatus2;
+	__I  uint32_t HcRevision;             /* USB Host Registers                 */
+	__IO uint32_t HcControl;
+	__IO uint32_t HcCommandStatus;
+	__IO uint32_t HcInterruptStatus;
+	__IO uint32_t HcInterruptEnable;
+	__IO uint32_t HcInterruptDisable;
+	__IO uint32_t HcHCCA;
+	__I  uint32_t HcPeriodCurrentED;
+	__IO uint32_t HcControlHeadED;
+	__IO uint32_t HcControlCurrentED;
+	__IO uint32_t HcBulkHeadED;
+	__IO uint32_t HcBulkCurrentED;
+	__I  uint32_t HcDoneHead;
+	__IO uint32_t HcFmInterval;
+	__I  uint32_t HcFmRemaining;
+	__I  uint32_t HcFmNumber;
+	__IO uint32_t HcPeriodicStart;
+	__IO uint32_t HcLSTreshold;
+	__IO uint32_t HcRhDescriptorA;
+	__IO uint32_t HcRhDescriptorB;
+	__IO uint32_t HcRhStatus;
+	__IO uint32_t HcRhPortStatus1;
+	__IO uint32_t HcRhPortStatus2;
 	uint32_t RESERVED0[40];
 	__I  uint32_t Module_ID;
 
-	__I  uint32_t IntSt;               /* USB On-The-Go Registers            */
-	__IO uint32_t IntEn;
-	__O  uint32_t IntSet;
-	__O  uint32_t IntClr;
-	__IO uint32_t StCtrl;
-	__IO uint32_t Tmr;
+	__I  uint32_t OTGIntSt;               /* USB On-The-Go Registers            */
+	__IO uint32_t OTGIntEn;
+	__O  uint32_t OTGIntSet;
+	__O  uint32_t OTGIntClr;
+	__IO uint32_t OTGStCtrl;
+	__IO uint32_t OTGTmr;
 	uint32_t RESERVED1[58];
 
-	__I  uint32_t DevIntSt;            /* USB Device Interrupt Registers     */
-	__IO uint32_t DevIntEn;
-	__O  uint32_t DevIntClr;
-	__O  uint32_t DevIntSet;
+	__I  uint32_t USBDevIntSt;            /* USB Device Interrupt Registers     */
+	__IO uint32_t USBDevIntEn;
+	__O  uint32_t USBDevIntClr;
+	__O  uint32_t USBDevIntSet;
 
-	__O  uint32_t CmdCode;             /* USB Device SIE Command Registers   */
-	__I  uint32_t CmdData;
+	__O  uint32_t USBCmdCode;             /* USB Device SIE Command Registers   */
+	__I  uint32_t USBCmdData;
 
-	__I  uint32_t RxData;              /* USB Device Transfer Registers      */
-	__O  uint32_t TxData;
-	__I  uint32_t RxPLen;
-	__O  uint32_t TxPLen;
-	__IO uint32_t Ctrl;
-	__O  uint32_t DevIntPri;
+	__I  uint32_t USBRxData;              /* USB Device Transfer Registers      */
+	__O  uint32_t USBTxData;
+	__I  uint32_t USBRxPLen;
+	__O  uint32_t USBTxPLen;
+	__IO uint32_t USBCtrl;
+	__O  uint32_t USBDevIntPri;
 
-	__I  uint32_t EpIntSt;             /* USB Device Endpoint Interrupt Regs */
-	__IO uint32_t EpIntEn;
-	__O  uint32_t EpIntClr;
-	__O  uint32_t EpIntSet;
-	__O  uint32_t EpIntPri;
+	__I  uint32_t USBEpIntSt;             /* USB Device Endpoint Interrupt Regs */
+	__IO uint32_t USBEpIntEn;
+	__O  uint32_t USBEpIntClr;
+	__O  uint32_t USBEpIntSet;
+	__O  uint32_t USBEpIntPri;
 
-	__IO uint32_t ReEp;                /* USB Device Endpoint Realization Reg*/
-	__O  uint32_t EpInd;
-	__IO uint32_t MaxPSize;
+	__IO uint32_t USBReEp;                /* USB Device Endpoint Realization Reg*/
+	__O  uint32_t USBEpInd;
+	__IO uint32_t USBMaxPSize;
 
-	__I  uint32_t DMARSt;              /* USB Device DMA Registers           */
-	__O  uint32_t DMARClr;
-	__O  uint32_t DMARSet;
+	__I  uint32_t USBDMARSt;              /* USB Device DMA Registers           */
+	__O  uint32_t USBDMARClr;
+	__O  uint32_t USBDMARSet;
 	uint32_t RESERVED2[9];
-	__IO uint32_t UDCAH;
-	__I  uint32_t EpDMASt;
-	__O  uint32_t EpDMAEn;
-	__O  uint32_t EpDMADis;
-	__I  uint32_t DMAIntSt;
-	__IO uint32_t DMAIntEn;
+	__IO uint32_t USBUDCAH;
+	__I  uint32_t USBEpDMASt;
+	__O  uint32_t USBEpDMAEn;
+	__O  uint32_t USBEpDMADis;
+	__I  uint32_t USBDMAIntSt;
+	__IO uint32_t USBDMAIntEn;
 	uint32_t RESERVED3[2];
-	__I  uint32_t EoTIntSt;
-	__O  uint32_t EoTIntClr;
-	__O  uint32_t EoTIntSet;
-	__I  uint32_t NDDRIntSt;
-	__O  uint32_t NDDRIntClr;
-	__O  uint32_t NDDRIntSet;
-	__I  uint32_t SysErrIntSt;
-	__O  uint32_t SysErrIntClr;
-	__O  uint32_t SysErrIntSet;
+	__I  uint32_t USBEoTIntSt;
+	__O  uint32_t USBEoTIntClr;
+	__O  uint32_t USBEoTIntSet;
+	__I  uint32_t USBNDDRIntSt;
+	__O  uint32_t USBNDDRIntClr;
+	__O  uint32_t USBNDDRIntSet;
+	__I  uint32_t USBSysErrIntSt;
+	__O  uint32_t USBSysErrIntClr;
+	__O  uint32_t USBSysErrIntSet;
 	uint32_t RESERVED4[15];
 
 	union {
 		__I  uint32_t I2C_RX;                 /* USB OTG I2C Registers              */
 		__O  uint32_t I2C_TX;
 	};
-	__IO  uint32_t I2C_STS;
+	__I  uint32_t I2C_STS;
 	__IO uint32_t I2C_CTL;
 	__IO uint32_t I2C_CLKHI;
 	__O  uint32_t I2C_CLKLO;
@@ -1380,7 +1357,7 @@ typedef struct
 /*------------- EEPROM Controller (EEPROM) -----------------------------------*/
 typedef struct
 {
-	__IO uint32_t CMD;			/* 0x0080 */
+	__IO uint32_t CMD;			    /* 0x0080 */
 	__IO uint32_t ADDR;
 	__IO uint32_t WDATA;
 	__IO uint32_t RDATA;
@@ -1426,7 +1403,6 @@ typedef struct
 #define LPC_RTC_BASE          (LPC_APB0_BASE + 0x24000)
 #define LPC_GPIOINT_BASE      (LPC_APB0_BASE + 0x28080)
 #define LPC_IOCON_BASE        (LPC_APB0_BASE + 0x2C000)
-#define LPC_PINCON_BASE       (LPC_APB0_BASE + 0x2C000)
 #define LPC_SSP1_BASE         (LPC_APB0_BASE + 0x30000)
 #define LPC_ADC_BASE          (LPC_APB0_BASE + 0x34000)
 #define LPC_CANAF_RAM_BASE    (LPC_APB0_BASE + 0x38000)
@@ -1500,7 +1476,6 @@ typedef struct
 #define LPC_RTC               ((LPC_RTC_TypeDef       *) LPC_RTC_BASE      )
 #define LPC_GPIOINT           ((LPC_GPIOINT_TypeDef   *) LPC_GPIOINT_BASE  )
 #define LPC_IOCON             ((LPC_IOCON_TypeDef     *) LPC_IOCON_BASE    )
-#define LPC_PINCON            ((LPC_PINCON_TypeDef    *) LPC_PINCON_BASE   )
 #define LPC_SSP0              ((LPC_SSP_TypeDef       *) LPC_SSP0_BASE     )
 #define LPC_SSP1              ((LPC_SSP_TypeDef       *) LPC_SSP1_BASE     )
 #define LPC_SSP2              ((LPC_SSP_TypeDef       *) LPC_SSP2_BASE     )

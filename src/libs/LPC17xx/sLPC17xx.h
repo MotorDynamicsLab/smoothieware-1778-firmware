@@ -19,8 +19,6 @@
  * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
  *
  ******************************************************************************/
-
-
 #ifndef __LPC17xx_H__
 #define __LPC17xx_H__
 

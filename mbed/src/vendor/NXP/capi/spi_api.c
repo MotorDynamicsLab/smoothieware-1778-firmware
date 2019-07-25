@@ -203,8 +203,12 @@ void spi_frequency(spi_t *obj, int hz) {
     }
 #endif
 
-    uint32_t PCLK = SystemCoreClock;
-    int prescaler;
+#if defined(TARGET_LPC1778)
+	uint32_t PCLK = PeripheralClock;
+#else
+	uint32_t PCLK = SystemCoreClock;
+#endif
+	int prescaler;
 
     for (prescaler = 2; prescaler <= 254; prescaler += 2) {
         int prescale_hz = PCLK / prescaler;
