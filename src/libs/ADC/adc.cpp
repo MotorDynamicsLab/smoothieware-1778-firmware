@@ -11,9 +11,8 @@ ADC *ADC::instance;
 
 ADC::ADC(int sample_rate, int cclk_div)
     {
-    int i, adc_clk_freq, pclk, clock_div, max_div=1;
-
 #if !defined(TARGET_LPC1778)
+	int i, adc_clk_freq, pclk, clock_div, max_div = 1;
     //Work out CCLK
     adc_clk_freq=CLKS_PER_SAMPLE*sample_rate;
     int m = (LPC_SC->PLL0CFG & 0xFFFF) + 1;
@@ -47,13 +46,6 @@ ADC::ADC(int sample_rate, int cclk_div)
             break;
     }
 	pclk = cclk / cclk_div;
-#elif defined(TARGET_LPC1778)
-	//Power up the ADC
-	LPC_SC->PCONP |= (1 << 12);
-	//Work out CCLK
-	adc_clk_freq = CLKS_PER_SAMPLE * sample_rate;
-	pclk = PeripheralClock;
-#endif
     clock_div=pclk / adc_clk_freq;
 
     if (clock_div > 0xFF) {
@@ -77,12 +69,34 @@ ADC::ADC(int sample_rate, int cclk_div)
         ((clock_div - 1 ) << 8 ) |    //Clkdiv
         ( 1 << 21 );                  //A/D operational
 
+#elif defined(TARGET_LPC1778)
+	//Power up the ADC
+	LPC_SC->PCONP |= (1 << 12);
+	
+	//Enable PDN bit
+	uint32_t tmp = (1 << 21);
+
+	//Set clock frequency
+	/* The APB clock (PCLK_ADC0) is divided by (CLKDIV+1) to produce the clock for
+	 * A/D converter, which should be less than or equal to 12.4MHz.
+	 * A fully conversion requires 31 of these clocks.
+	 * ADC clock = PCLK_ADC0 / (CLKDIV + 1);
+	 * ADC rate = ADC clock / 31;
+	 */
+	uint32_t temp = sample_rate * 31;
+	uint32_t ADCPClk = PeripheralClock;
+	temp = (ADCPClk * 2 + temp) / (2 * temp) - 1; //get the round value by fomular: (2*A + B)/(2*A)
+	tmp |= (temp << 8);
+
+	LPC_ADC->ADCR = tmp;
+#endif
+
     //Default no channels enabled
     LPC_ADC->ADCR &= ~0xFF;
     //Default NULL global custom isr
     _adc_g_isr = NULL;
     //Initialize arrays
-    for (i=7; i>=0; i--) {
+    for (int i=7; i>=0; i--) {
         _adc_data[i] = 0;
         _adc_isr[i] = NULL;
     }
@@ -285,26 +299,32 @@ void ADC::setup(PinName pin, int state) {
 		default:
 			LPC_IOCON->P0_23 &= ~0x07;
 			LPC_IOCON->P0_23 |= 0x1;
+			LPC_IOCON->P0_23 &= ~(1 << 7);
 			break;
 		case p16://=p0.24 of LPC1778
 			LPC_IOCON->P0_24 &= ~0x07;
 			LPC_IOCON->P0_24 |= 0x1;
+			LPC_IOCON->P0_24 &= ~(1 << 7);
 			break;
 		case p17://=p0.25 of LPC1778
 			LPC_IOCON->P0_25 &= ~0x07;
 			LPC_IOCON->P0_25 |= 0x1;
+			LPC_IOCON->P0_25 &= ~(1 << 7);
 			break;
 		case p18://=p0.26 of LPC1778:
 			LPC_IOCON->P0_26 &= ~0x07;
 			LPC_IOCON->P0_26 |= 0x1;
+			LPC_IOCON->P0_26 &= ~(1 << 7);
 			break;
 		case p19://=p1.30 of LPC1778
 			LPC_IOCON->P1_30 &= ~0x07;
 			LPC_IOCON->P1_30 |= 0x3;
+			LPC_IOCON->P1_30 &= ~(1 << 7);
 			break;
 		case p20://=p1.31 of LPC1778
 			LPC_IOCON->P1_31 &= ~0x07;
 			LPC_IOCON->P1_31 |= 0x3;
+			LPC_IOCON->P1_31 &= ~(1 << 7);
 			break;
 		}
 		//Only one channel can be selected at a time if not in burst mode
